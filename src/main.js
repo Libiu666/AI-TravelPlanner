@@ -1,0 +1,12 @@
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router/index'
+
+import { Button } from 'vant';
+// 2. 引入组件样式
+import 'vant/lib/index.css';
+import 'amfe-flexible';
+
+
+
+createApp(App).use(router).use(Button).mount('#app')
