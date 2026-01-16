@@ -1,5 +1,5 @@
 <script setup>
-
+import loadIng from  '@/page/component/loading.vue';
 </script>
 
 <template>
@@ -12,7 +12,9 @@
     </div>
     <div class="ai-message">
         <p class="mark-text">大模型回复</p>
+        <loadIng></loadIng>
     </div>
+    
   </div>
   
 </template>
