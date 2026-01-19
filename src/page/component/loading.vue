@@ -7,6 +7,8 @@
     <span class="circle"></span>
     <span class="circle"></span>
     <span class="circle"></span>
+    <span class="circle"></span>
+    <span class="circle"></span>
   </div>
   
 </template>
@@ -20,7 +22,7 @@
             width: 7px;
             height: 7px;
             border-radius: 50px;
-            background-color: #777a8d;
+            background-color: #064996;
             margin: 0 4px;
             animation: colorChange 1s linear infinite;
         }
@@ -28,24 +30,34 @@
             animation-delay: 0s;
         }
         .circle:nth-child(2){
-            animation-delay: 0.33s;
+            animation-delay: 0.2;
         }
         .circle:nth-child(3){
-            animation-delay: 0.67s;
+            animation-delay: 0.4s;
+        }
+        .circle:nth-child(4){
+            animation-delay: 0.6s;
+        }
+        .circle:nth-child(5){
+            animation-delay: 0.8s;
         }
     }
     @keyframes colorChange{
         0%{
-            background-color: #ffcc00;
+            background-color: #777a8d;
         }
-        33.33%{
-            background-color: #ffcc00;
+        20%{
+            background-color: #777a8d;
         }
-        66.67%{
-            background-color: #ffcc00;
+        40%{
+            background-color: #777a8d;
         }
-        
-
+        60%{
+            background-color: #777a8d;
+        }
+        80%{
+            background-color: #777a8d;
+        }
     }
 
 </style>
