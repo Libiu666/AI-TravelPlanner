@@ -3,10 +3,14 @@ import ChatMessage from '@/page/component/chatMessage.vue'
 import sendMessage from './sendMessage.vue';
 import { ref, nextTick } from 'vue';
 import { useChatStream } from '@/composables/useChatStreams';
+
 import { useConversationStore } from '@/store/conversationStore.js'
 
-const store = useConversationStore()
-const messages = store.messages
+
+
+
+const messages = ref([])
+
 const chatListRef = ref(null) // 1. 获取滚动容器的引用
 
 const {startStream}= useChatStream()
@@ -22,11 +26,20 @@ const scrollToBottom = async () => {
 /** 用户发送 */
 const handleSend = async(text) => {
   // 1️⃣ 用户消息
-  store.addUserMessage(text)
+
+  messages.value.push({
+    role: 'user',
+    content: text
+  })
   scrollToBottom() // 发送后滚动
 
   // 2️⃣ AI 占位
-  const aiIndex = store.addAiPlaceholder()
+  const aiMessage = ref({
+    role: 'assistant',
+    content: '',
+    loading: true
+  })
+  messages.value.push(aiMessage.value)
   scrollToBottom() // 占位后滚动
 
   console.log('② 准备调用 startStream')
@@ -36,12 +49,17 @@ const handleSend = async(text) => {
     // onMessage：逐字追加
     (chunk) => {
       console.log('🧩 收到 chunk:', chunk)
-      store.appendAiContent(aiIndex, chunk)
+
+      //收到第一个包时关闭loading
+      if(aiMessage.value.loading){
+        aiMessage.value.loading = false
+      }
+      aiMessage.value.content += chunk
       scrollToBottom() // 实时滚动
     },
     // onDone：结束
     () => {
-      store.endAiMessage(aiIndex)
+      aiMessage.value.loading = false
     }
   )
 }
