@@ -1,4 +1,14 @@
 <script setup>
+const defaultQuestions=[
+    {
+        id:1,
+        desc:'你好,我可以咨询些什么'
+    },
+    {
+        id:2,
+        desc:'请帮我制定一份出游计划'
+    }
+]
 
 </script>
 
@@ -9,9 +19,9 @@
   </div>
   <div class="customer-service">
     <span class="tips">你可以这样问我</span>
-    <div class="customer-service-list">
+    <div class="customer-service-list" v-for="item in defaultQuestions" :key="item.id">
        <img src="@/assets/img/message.png" alt=""/>
-       <p>你好</p> 
+       <p>{{ item.desc }}</p> 
     </div>
   </div>
   <div class="huan-yi-huan">

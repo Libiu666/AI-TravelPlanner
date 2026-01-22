@@ -1,3 +1,4 @@
+import getbaseStreamsAPI from '@/apis/baseconversation'
 export function useChatStream() {
     /**
      * 启动流式请求
@@ -6,17 +7,7 @@ export function useChatStream() {
      * @param {() => void} onDone
      */
     const startStream = async (text, onMessage, onDone) => {
-      const response = await fetch('http://localhost:7000/chatMessage', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          chatMessage: [
-            { role: 'user', content: text }
-          ]
-        })
-      })
+      const response = await getbaseStreamsAPI('user',text)
   
       const reader = response.body.getReader()
       const decoder = new TextDecoder('utf-8')
