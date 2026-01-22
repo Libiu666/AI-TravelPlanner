@@ -11,7 +11,8 @@
     <span class="tips">你可以这样问我</span>
     <div class="customer-service-list">
        <img src="@/assets/img/message.png" alt=""/>
-       <p>你好</p> 
+       <p>你好，我想咨询一下</p> 
+       <p>帮我制定一份出游计划</p>
     </div>
   </div>
   <div class="huan-yi-huan">
