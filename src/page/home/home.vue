@@ -17,6 +17,11 @@ import chatPage from '../component/chatPage.vue';
 <style scoped>
   .content{
     padding: 0 15px;
-  }
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; 
+    box-sizing: border-box;
+  } 
 
 </style>

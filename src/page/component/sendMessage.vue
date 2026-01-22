@@ -40,16 +40,13 @@
   <style scoped> 
   /* 输入框整体 */
   .gpt-input-box {
-    position:fixed;
-    bottom:12px;
-    left:12px;
-    right:12px;
     display: flex;
     align-items: flex-end;
     gap: 8px;
     background: #fff;
     border-radius: 16px;
     padding: 8px 12px;
+    margin-bottom: 6px;
   }
   
   /* 文本域 */
