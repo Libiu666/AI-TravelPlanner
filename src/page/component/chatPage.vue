@@ -6,10 +6,11 @@ import { useChatStream } from '@/composables/useChatStreams';
 
 import { useConversationStore } from '@/store/conversationStore.js'
 
+const conversationStore = useConversationStore()
 
 
 
-const messages = ref([])
+const messages = conversationStore.messages
 
 const chatListRef = ref(null) // 1. 获取滚动容器的引用
 
@@ -26,20 +27,11 @@ const scrollToBottom = async () => {
 /** 用户发送 */
 const handleSend = async(text) => {
   // 1️⃣ 用户消息
-
-  messages.value.push({
-    role: 'user',
-    content: text
-  })
+  conversationStore.addUserMessage(text)
   scrollToBottom() // 发送后滚动
 
   // 2️⃣ AI 占位
-  const aiMessage = ref({
-    role: 'assistant',
-    content: '',
-    loading: true
-  })
-  messages.value.push(aiMessage.value)
+  const aiIndex = conversationStore.addAiPlaceholder()
   scrollToBottom() // 占位后滚动
 
   console.log('② 准备调用 startStream')
@@ -51,15 +43,13 @@ const handleSend = async(text) => {
       console.log('🧩 收到 chunk:', chunk)
 
       //收到第一个包时关闭loading
-      if(aiMessage.value.loading){
-        aiMessage.value.loading = false
-      }
-      aiMessage.value.content += chunk
+      conversationStore.appendAiContent(aiIndex, chunk)
       scrollToBottom() // 实时滚动
     },
     // onDone：结束
     () => {
-      aiMessage.value.loading = false
+      /*aiMessage.value.loading = false*/
+      conversationStore.endAiMessage(aiIndex)
     }
   )
 }

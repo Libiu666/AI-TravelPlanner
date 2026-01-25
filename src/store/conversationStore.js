@@ -53,8 +53,8 @@ export const useConversationStore = defineStore('conversation', () => {
 
   const appendAiContent = (index, chunk) => {
     const m = messages.value[index];
-    if (!m) return;
-    if (m.loading) {
+    //收到第一个包时关闭loading
+    if (!m&&m.loading) {
       m.loading = false;
     }
     m.content += chunk;
@@ -82,4 +82,12 @@ export const useConversationStore = defineStore('conversation', () => {
     loadFromStorage,
     saveToStorage
   };
-});
+} ,
+{
+  persist:{
+    key: 'conversation_messages',
+    paths:['messages'],
+    storage: window.localStorage,
+  }
+}
+);

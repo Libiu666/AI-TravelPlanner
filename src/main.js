@@ -7,7 +7,9 @@ import { Button , Image as VanImage ,Field, CellGroup} from 'vant';
 import 'vant/lib/index.css';
 import 'amfe-flexible';
 import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
 const pinia=createPinia()
+pinia.use(piniaPluginPersistedstate);
 
 createApp(App).use(router).use(pinia).use(Button).use(VanImage).use(Field).use(CellGroup).mount('#app')

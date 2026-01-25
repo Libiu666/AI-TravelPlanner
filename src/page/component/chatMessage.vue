@@ -72,6 +72,8 @@ defineProps({
             line-height: 1.5;
             color: black;
             padding:5px;
+            white-space: pre-wrap;
+            word-break: break-word;
             
         }
     }
