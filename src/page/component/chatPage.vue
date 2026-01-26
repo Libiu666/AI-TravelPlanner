@@ -3,14 +3,12 @@ import ChatMessage from '@/page/component/chatMessage.vue'
 import sendMessage from './sendMessage.vue';
 import { ref, nextTick } from 'vue';
 import { useChatStream } from '@/composables/useChatStreams';
-
 import { useConversationStore } from '@/store/conversationStore.js'
+import { trimMessagesbyTokens } from '@/composables/contextManager.js'
 
 const conversationStore = useConversationStore()
 
-
-
-const messages = conversationStore.messages
+//const messages = conversationStore.messages
 
 const chatListRef = ref(null) // 1. 获取滚动容器的引用
 
@@ -29,15 +27,17 @@ const handleSend = async(text) => {
   // 1️⃣ 用户消息
   conversationStore.addUserMessage(text)
   scrollToBottom() // 发送后滚动
-
+  
   // 2️⃣ AI 占位
   const aiIndex = conversationStore.addAiPlaceholder()
   scrollToBottom() // 占位后滚动
 
+  const context = trimMessagesbyTokens(conversationStore.messages, 800);
+
   console.log('② 准备调用 startStream')
    // 3️⃣ 启动流式填充（第三步核心）
    await startStream(
-    text,
+    context,
     // onMessage：逐字追加
     (chunk) => {
       console.log('🧩 收到 chunk:', chunk)
@@ -59,7 +59,7 @@ const handleSend = async(text) => {
 <div class="chat-page">
     <div class="chat-list" ref="chatListRef">
       <ChatMessage
-        v-for="(item, index) in messages"
+        v-for="(item, index) in conversationStore.messages"
         :key="index"
         :role="item.role"
         :content="item.content"
